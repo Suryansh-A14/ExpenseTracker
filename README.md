@@ -28,7 +28,7 @@ In another terminal, start the Streamlit app:
 streamlit run streamlit_app.py
 ```
 
-On Windows, you can also double-click `start_app.bat` to start both the API and Streamlit app.
+On Windows, you can also double-click `start_app.bat` to start both the API and Streamlit app. If you only run `streamlit run streamlit_app.py`, the frontend starts an internal FastAPI server automatically so it can still work on Streamlit Community Cloud.
 
 By default, the frontend talks to `http://127.0.0.1:8000`. To point it at another API:
 
@@ -85,10 +85,12 @@ The backend supports optional `Idempotency-Key` headers. Without a key, `POST /e
 
 Authentication, user accounts, recurring expenses, pagination, and deployment configuration are intentionally left out to keep the feature set focused. The frontend uses simple Streamlit components rather than a custom design system. Category filtering is exact-match based on the existing saved categories.
 
-## Deployment note
+## Streamlit Community Cloud deployment
 
-For a live submission, deploy the FastAPI backend and Streamlit frontend separately, then set `EXPENSE_API_URL` in the Streamlit environment to the deployed backend URL.
+Deployed the app.
+It can be accessed using link : https://expense-tracker-fenma-assignment.streamlit.app/
 
-## Intentional Not did
 
-Custom Design System- Used Simple Streamlit componenets because fo the timebox.
+## Intentionally not done
+
+Custom design system: used simple Streamlit components because of the timebox.
