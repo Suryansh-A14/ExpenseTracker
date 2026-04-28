@@ -254,6 +254,14 @@ def create_app(db_path: str | Path | None = None) -> FastAPI:
     def health() -> dict[str, str]:
         return {"status": "ok"}
 
+    @app.get("/", summary="API information")
+    def root() -> dict[str, str]:
+        return {
+            "name": "Expense Tracker API",
+            "docs": "/docs",
+            "health": "/health",
+        }
+
     return app
 
 
