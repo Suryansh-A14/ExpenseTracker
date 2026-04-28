@@ -9,12 +9,34 @@ import pandas as pd
 import requests
 import streamlit as st
 
+from backend.embedded import ensure_embedded_api
 
-API_BASE_URL = os.getenv("EXPENSE_API_URL", "http://127.0.0.1:8000").rstrip("/")
+
 API_UNAVAILABLE_MESSAGE = (
-    "The backend API is not reachable. Start it with "
-    "`python -m uvicorn backend.main:app --reload`, then refresh this page."
+    "The expense API is not reachable. If you are running locally, start it with "
+    "`python -m uvicorn backend.main:app --reload` or use `start_app.bat`, "
+    "then refresh this page."
 )
+
+
+def get_api_base_url() -> str:
+    configured_url = os.getenv("EXPENSE_API_URL", "").strip()
+    if not configured_url:
+        try:
+            configured_url = st.secrets.get("EXPENSE_API_URL")
+        except Exception:
+            configured_url = None
+
+    if not configured_url:
+        return ensure_embedded_api()
+
+    api_url = configured_url
+    if not api_url.startswith(("http://", "https://")):
+        api_url = f"http://{api_url}"
+    return api_url.rstrip("/")
+
+
+API_BASE_URL = ""
 
 
 def format_currency(value: Decimal) -> str:
@@ -56,6 +78,12 @@ def ensure_submission_key() -> str:
 
 
 st.set_page_config(page_title="Expense Tracker", page_icon="₹", layout="wide")
+try:
+    API_BASE_URL = get_api_base_url()
+except RuntimeError as exc:
+    st.error(f"Could not start the internal expense API. Details: {exc}")
+    st.stop()
+
 st.title("Expense Tracker")
 
 st.header("Add expense")
@@ -64,8 +92,9 @@ with st.form("expense-form", clear_on_submit=False):
     cols = st.columns([1, 1, 1, 2])
     amount = cols[0].number_input(
         "Amount",
-        min_value=0.0,
-        step=10.0,
+        min_value=0.01,
+        value=0.01,
+        step=1.0,
         format="%.2f",
     )
     category = cols[1].text_input("Category", placeholder="Food")
