@@ -85,3 +85,5 @@ https://expense-tracker-fenma-assignment.streamlit.app/
 ## Intentionally not done
 
 Custom design system: used simple Streamlit components because of the timebox.
+User authentication and multi-user support were intentionally not included
+to keep the system focused and maintainable within the time constraint.
