@@ -30,20 +30,11 @@ streamlit run streamlit_app.py
 
 On Windows, you can also double-click `start_app.bat` to start both the API and Streamlit app. If you only run `streamlit run streamlit_app.py`, the frontend starts an internal FastAPI server automatically so it can still work on Streamlit Community Cloud.
 
-By default, the frontend talks to `http://127.0.0.1:8000`. To point it at another API:
+By default, the frontend talks to `http://127.0.0.1:8000`.
 
-```bash
-set EXPENSE_API_URL=https://your-api.example.com
-streamlit run streamlit_app.py
-```
+The SQLite database is created at `data/expenses.db`.
 
-The SQLite database is created at `data/expenses.db`. To use a different path:
-
-```bash
-set EXPENSE_TRACKER_DB=C:\path\to\expenses.db
-uvicorn backend.main:app --reload
-```
-
+## API
 
 ### `POST /expenses`
 
@@ -87,9 +78,9 @@ Authentication, user accounts, recurring expenses, pagination, and deployment co
 
 ## Streamlit Community Cloud deployment
 
-Deployed the app.
-It can be accessed using link : https://expense-tracker-fenma-assignment.streamlit.app/
+The app is deployed on Streamlit Community Cloud:
 
+https://expense-tracker-fenma-assignment.streamlit.app/
 
 ## Intentionally not done
 
